@@ -3,6 +3,7 @@
     "name": "oic-mobile",
     "slug": "oic-mobile",
     "version": "1.0.0",
+    "owner": "oic-mobile",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -27,6 +28,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": ""
   }
 }
