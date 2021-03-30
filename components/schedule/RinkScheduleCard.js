@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 import Colors from '../../constants/Colors';
@@ -63,7 +63,7 @@ const RinkSchedule = ({ data, combined = false }) => {
 
   const singleTeam = (
     <View style={{ alignItems: 'center' }}>
-      <Text style={[styles.text, data.rink.includes('North') && { color: 'white' }]}>{data.event}</Text>
+      <Text style={[styles.text, data.rink.includes('North') && { color: 'white' }]}>{data.event.length > 28 ? data.event.substring(0, 28) + '...' : data.event}</Text>
       {!data.home_locker_room ? null :
         <Text style={[styles.text, data.rink.includes('North') && { color: 'white' }]}>
           Locker Rooms: {data.home_locker_room}{data.visitor_locker_room && `, ${data.visitor_locker_room}`}
@@ -113,20 +113,6 @@ const styles = StyleSheet.create({
     fontFamily: 'RussoOne',
     color: Colors.chartreuse,
     fontSize: 16,
-  },
-  // timer: {
-  //   fontFamily: 'RussoOne',
-  //   color: 'white',
-  //   fontSize: 16,
-  // },
-  lockerroom: {
-    // flexDirection: 'row',
-    // justifyContent: 'space-evenly',
-    width: '100%',
-  },
-  lockerRoomRows: {
-    flexDirection: 'row',
-    justifyContent: 'center'
   },
 });
 

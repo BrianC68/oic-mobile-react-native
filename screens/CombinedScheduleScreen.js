@@ -1,20 +1,25 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import Colors from '../constants/Colors';
 import DrawerToggle from '../components/UI/DrawerToggle';
 import RinkScheduleCard from '../components/schedule/RinkScheduleCard';
 
 import SplashAnimation from '../components/UI/SplashAnimation';
 import { getSchedule } from '../actions/scheduleActions';
-import {getPrograms} from '../actions/programsActions';
+import { getPrograms } from '../actions/programsActions';
 
 const CombinedScheduleScreen = ({ navigation, schedule, getSchedule, getPrograms }) => {
+  const [isReloading, setIsReloading] = useState(false);
+
   useEffect(() => {
-    getSchedule();
-    getPrograms();
+    let mounted = true;
+    if (mounted) {
+      getSchedule();
+      getPrograms();
+    }
+    return () => mounted = false;
   }, [getSchedule, getPrograms]);
 
   useEffect(() => {
@@ -25,14 +30,29 @@ const CombinedScheduleScreen = ({ navigation, schedule, getSchedule, getPrograms
     })
   }, [navigation]);
 
+  const reloadSchedule = async () => {
+    setIsReloading(true);
+    await getSchedule();
+    setIsReloading(false);
+  };
+
   return (
     <View style={styles.screen}>
       <SplashAnimation />
-      <ScrollView style={{ width: '100%' }}>
-        {schedule.map(event => (
-          <RinkScheduleCard key={event.id} data={event} combined={true} />
-        ))}
-      </ScrollView>
+      <FlatList
+        onRefresh={reloadSchedule}
+        refreshing={isReloading}
+        style={{ width: '100%', height: '100%' }}
+        contentContainerStyle={{ flexGrow: 1 }}
+        data={schedule}
+        keyExtractor={event => String(event.id)}
+        renderItem={event =>
+          <RinkScheduleCard
+            data={event.item}
+            combined={true}
+          />
+        }
+      />
     </View>
   )
 }
@@ -44,10 +64,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // paddingHorizontal: 20,
   },
-  text: {
-    fontSize: 18,
-    color: Colors.darkBlue,
-  }
 });
 
 CombinedScheduleScreen.propTypes = {
