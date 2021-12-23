@@ -1,15 +1,24 @@
 import React, { useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions, Animated } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
 
 import Colors from '../../constants/Colors';
 
 const SCREEN_HEIGHT = Dimensions.get('screen').height;
 
 const SplashAnimation = props => {
-  const shrinkAnim = useRef(new Animated.Value(SCREEN_HEIGHT + 50)).current;
+  const shrinkAnim = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
   const fadeOut = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
+    const hideSplashScreen = async () => {
+      try {
+        await SplashScreen.hideAsync();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    hideSplashScreen();
     fadeAnimation();
     shrinkAnimation();
   }, []);
@@ -44,8 +53,8 @@ const SplashAnimation = props => {
             opacity: fadeOut,
           }
         }>
-          <Text
-            style={styles.text}>Ozaukee Ice Center
+          <Text style={styles.text}>
+            Ozaukee Ice Center
           </Text>
         </Animated.View>
       </Animated.View>
@@ -55,9 +64,10 @@ const SplashAnimation = props => {
 
 const styles = StyleSheet.create({
   screen: {
-    // flex: 1,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    // right: 200,
     zIndex: 2,
     elevation: 12,
     position: 'absolute',

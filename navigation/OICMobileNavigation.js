@@ -188,25 +188,25 @@ const ScheduleTabsNavigator = () => {
   )
 };
 
-const ScheduleScreenStackNavigator = createStackNavigator();
+// const ScheduleScreenStackNavigator = createStackNavigator();
 
-const ScheduleScreenNavigator = () => {
-  return (
-    <ScheduleScreenStackNavigator.Navigator
-      screenOptions={defaultNavOptions}
-    >
-      <ScheduleScreenStackNavigator.Screen
-        name='Schedule'
-        component={ScheduleTabsNavigator}
-        options={
-          {
-            title: 'Rink Schedule',
-          }
-        }
-      />
-    </ScheduleScreenStackNavigator.Navigator>
-  )
-};
+// const ScheduleScreenNavigator = () => {
+//   return (
+//     <ScheduleScreenStackNavigator.Navigator
+//       screenOptions={defaultNavOptions}
+//     >
+//       <ScheduleScreenStackNavigator.Screen
+//         name='Schedule'
+//         component={ScheduleTabsNavigator}
+//         options={
+//           {
+//             title: 'Rink Schedule',
+//           }
+//         }
+//       />
+//     </ScheduleScreenStackNavigator.Navigator>
+//   )
+// };
 
 const ExploreScreenStackNavigator = createStackNavigator();
 

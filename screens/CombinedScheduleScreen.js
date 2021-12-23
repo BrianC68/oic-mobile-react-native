@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import DrawerToggle from '../components/UI/DrawerToggle';
 import RinkScheduleCard from '../components/schedule/RinkScheduleCard';
 
-import SplashAnimation from '../components/UI/SplashAnimation';
 import { getSchedule } from '../actions/scheduleActions';
 import { getPrograms } from '../actions/programsActions';
+import Colors from '../constants/Colors';
 
-const CombinedScheduleScreen = ({ navigation, schedule, getSchedule, getPrograms }) => {
+const CombinedScheduleScreen = ({ navigation, schedule, getSchedule, getPrograms, loading }) => {
   const [isReloading, setIsReloading] = useState(false);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const CombinedScheduleScreen = ({ navigation, schedule, getSchedule, getPrograms
 
   return (
     <View style={styles.screen}>
-      <SplashAnimation />
+      {loading && <ActivityIndicator color={Colors.darkBlue} size='large' />}
       <FlatList
         onRefresh={reloadSchedule}
         refreshing={isReloading}
@@ -70,10 +70,12 @@ CombinedScheduleScreen.propTypes = {
   getSchedule: PropTypes.func.isRequired,
   getPrograms: PropTypes.func.isRequired,
   schedule: PropTypes.array,
+  loading: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = state => ({
   schedule: state.schedule.schedule,
+  loading: state.schedule.loading,
 });
 
 export default connect(mapStateToProps, { getSchedule, getPrograms })(CombinedScheduleScreen);

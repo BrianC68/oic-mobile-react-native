@@ -5,11 +5,11 @@
     "version": "1.0.0",
     "owner": "oic-mobile",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/OIC-icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/OIC-Splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#383863"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -29,6 +29,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": ""
+    "description": "Ozaukee Ice Center, Mequon, WI"
   }
 }
